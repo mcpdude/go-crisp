@@ -12,10 +12,11 @@ def load_csv(path):
     return rows
 
 def write_csv(path, rows: dict, existing=False):
-    # wrapper around the CSV library for writing results. Use existing to append to files already written
+    # wrapper around the CSV library for writing results.
+    # Use existing to append to files already written
     if existing:
         with open(path, 'a') as csv_file:
-            writer = csv.DictWriter(csv_file)
+            writer = csv.DictWriter(csv_file, rows[0].keys())
             for row in rows:
                 writer.writerow(row)
     else:
