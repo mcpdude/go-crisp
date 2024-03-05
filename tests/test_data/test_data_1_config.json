@@ -8,21 +8,68 @@
         ]
     },
     "transforms": [
-    	{
-    		"type": "cast",
-    		"input_columns": ["Order Number"],
-    		"to_type": "int",
-    		"output_column_name": "OrderID"
-    	}
-
+        {
+            "type": "cast_int",
+            "input_column": "Order Number",
+            "output_type": "int",
+            "output_column_name": "OrderID"
+        },
+        {
+            "type": "concat",
+            "input_columns": [
+                "Year",
+                "Month",
+                "Day"
+            ],
+            "output_column_name": "OrderDate_unparsed",
+            "concat_value": "-"
+        },
+        {
+            "type": "cast_datetime",
+            "input_column": "OrderDate_unparsed",
+            "output_column_name": "OrderDate",
+            "datetime_format": "%Y-%M-%d"
+        },
+        {
+            "type": "cast_str",
+            "input_column": "Product Number",
+            "output_column_name": "ProductId_str"
+        },
+        {
+            "type": "casing",
+            "input_column": "Product Name",
+            "casing_choice": "proper",
+            "output_column_name": "Product_Name_cased"
+        },
+        {
+            "type": "constant",
+            "constant_value": "kg",
+            "output_column_name": "Unit"
+        }
     ],
     "output": {
         "columns": [
             {
                 "name": "OrderID",
-                "input_column": "thing"
-                
+                "input_column": "OrderID"
+            },
+            {
+                "name": "OrderDate",
+                "input_column": "OrderDate"
+            },
+            {
+                "name": "ProductId",
+                "input_column": "ProductId_str"
+            },
+            {
+                "name": "ProductName",
+                "input_column": "Product_Name_cased"
+            },
+            {
+                "name": "Unit",
+                "input_column": "Unit"
             }
+            
         ]
     }
 }

@@ -22,8 +22,7 @@ def verify_config(config: dict):
 	# transform tests
 	assert len(config['transforms']) > 0
 	for transform in config['transforms']:
-		print(transform.keys())
-		assert 'input_columns' in transform.keys()
+		assert 'input_columns' or 'input_column' in transform.keys()
 		assert 'output_column_name' in transform.keys()
 
 	# output tests
