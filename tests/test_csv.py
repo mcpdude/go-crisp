@@ -10,7 +10,7 @@ from src.csv_cleaner.csv import load_csv, write_csv
 def test_load_csv():
 	data = load_csv('tests/test_data/test_data_1.csv')
 	# breakpoint()
-	assert (len(data)) == 2
+	assert (len(list(data))) == 2
 
 def test_write_csv():
 	# remove test files, if any
@@ -24,9 +24,10 @@ def test_write_csv():
 		raise e
 
 	data = load_csv('tests/test_data/test_data_1.csv')
+	data = list(data)
 	write_csv('tests/test_data/test_data_1_output.csv', data)
 	written_data = load_csv('tests/test_data/test_data_1_output.csv')
-	assert data == written_data
+	assert data == list(written_data)
 
 def test_write_csv_with_append():
 	# remove test files, if any
@@ -40,7 +41,8 @@ def test_write_csv_with_append():
 		raise e
 
 	data = load_csv('tests/test_data/test_data_1.csv')
+	data = list(data)
 	write_csv('tests/test_data/test_data_1_output_appended.csv', data)
 	write_csv('tests/test_data/test_data_1_output_appended.csv', data, existing=True)
 	written_data = load_csv('tests/test_data/test_data_1_output_appended.csv')
-	assert len(written_data) ==  4
+	assert len(list(written_data)) ==  4

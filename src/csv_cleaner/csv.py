@@ -5,11 +5,12 @@ def load_csv(path):
     # wrapper around CSV library to return a generator for a given path
     with open(path, 'r') as csv_file:
         reader = csv.DictReader(csv_file)
-        rows = []
+        # rows = []
         for row in reader:
-            rows.append(row)
+            # rows.append(row)
+            yield row
 
-    return rows
+    # return rows
 
 def write_csv(path, rows: dict, existing=False):
     # wrapper around the CSV library for writing results.
