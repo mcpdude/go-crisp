@@ -11,8 +11,12 @@
         {
             "type": "cast_int",
             "input_column": "Order Number",
-            "output_type": "int",
             "output_column_name": "OrderID"
+        },
+        {
+            "type": "cast_decimal",
+            "input_column": "Count",
+            "output_column_name": "Count_bigdecimal"
         },
         {
             "type": "concat",
@@ -65,6 +69,11 @@
                 "name": "ProductName",
                 "input_column": "Product_Name_cased"
             },
+           	{
+                "name": "Quantity",
+                "input_column": "Count_bigdecimal"
+            },
+            
             {
                 "name": "Unit",
                 "input_column": "Unit"
