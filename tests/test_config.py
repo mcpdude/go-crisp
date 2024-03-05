@@ -10,6 +10,7 @@ from src.csv_cleaner.config import load_json_config, verify_config
 def test_load_config():
 	config = load_json_config('tests/test_data/test_data_1_config.json')
 	assert 'input' in config.keys()
+	assert 'transforms' in config.keys()
 	assert 'output' in config.keys()
 
 # TODO: would be good to use a fixture here to avoid loading twice

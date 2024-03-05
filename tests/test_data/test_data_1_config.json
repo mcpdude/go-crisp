@@ -1,0 +1,28 @@
+{
+    "input": {
+        "expected_columns": [
+            {
+                "column_name": "Order Number",
+                "regex": ""
+            }
+        ]
+    },
+    "transforms": [
+    	{
+    		"type": "cast",
+    		"input_columns": ["Order Number"],
+    		"to_type": "int",
+    		"output_column_name": "OrderID"
+    	}
+
+    ],
+    "output": {
+        "columns": [
+            {
+                "name": "OrderID",
+                "input_column": "thing"
+                
+            }
+        ]
+    }
+}

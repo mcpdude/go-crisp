@@ -19,13 +19,18 @@ def verify_config(config: dict):
 		assert 'column_name' in column.keys()
 		assert 'regex' in column.keys()
 
+	# transform tests
+	assert len(config['transforms']) > 0
+	for transform in config['transforms']:
+		print(transform.keys())
+		assert 'input_columns' in transform.keys()
+		assert 'output_column_name' in transform.keys()
+
 	# output tests
 	assert 'columns' in config['output'].keys()
 	assert len(config['output']['columns']) > 0
 	for column in config['output']['columns']:
 		assert 'name' in column.keys()
-		assert 'type' in column.keys()
-		assert 'nullable' in column.keys()
-		assert 'transforms' in column.keys()
+		assert 'input_column' in column.keys()
 
 	return config
