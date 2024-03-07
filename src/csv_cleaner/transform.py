@@ -41,43 +41,51 @@ def constant(constant_value):
 	return constant_value
 
 def do_the_transforms(row, transforms):
+	""" This creatively named function applies the available functions above.
+		You can also call individual transforms as needed, if you want to hard code the values or
+		use another config source"""
+	good = True
 	for transform in transforms:
-		if transform['type'] == 'cast_int':
-			row[transform['output_column_name']] = cast_to_int(
-					row[transform['input_column']])
+		try:
+			if transform['type'] == 'cast_int':
+				row[transform['output_column_name']] = cast_to_int(
+						row[transform['input_column']])
 
-		elif transform['type'] == 'cast_datetime':
-			row[transform['output_column_name']] = cast_to_datetime(
-					row[transform['input_column']], transform['datetime_format'])
+			elif transform['type'] == 'cast_datetime':
+				row[transform['output_column_name']] = cast_to_datetime(
+						row[transform['input_column']], transform['datetime_format'])
 
-		elif transform['type'] == 'cast_str':
-			row[transform['output_column_name']] = cast_to_str(
-					row[transform['input_column']])
+			elif transform['type'] == 'cast_str':
+				row[transform['output_column_name']] = cast_to_str(
+						row[transform['input_column']])
 
-		elif transform['type'] == 'cast_decimal':
-			row[transform['output_column_name']] = cast_to_decimal(
-					row[transform['input_column']])
+			elif transform['type'] == 'cast_decimal':
+				row[transform['output_column_name']] = cast_to_decimal(
+						row[transform['input_column']])
 
-		elif transform['type'] == 'casing':
-			row[transform['output_column_name']] = casing(
-					row[transform['input_column']], transform['casing_choice'])
+			elif transform['type'] == 'casing':
+				row[transform['output_column_name']] = casing(
+						row[transform['input_column']], transform['casing_choice'])
 
-		elif transform['type'] == 'concat':
-			# don't like this
-			input_values = [row[key] for key in transform['input_columns']]
+			elif transform['type'] == 'concat':
+				# don't like this
+				input_values = [row[key] for key in transform['input_columns']]
 
-			if transform['concat_value']:
-				row[transform['output_column_name']] = concat(
-					input_values, transform['concat_value'])
+				if transform['concat_value']:
+					row[transform['output_column_name']] = concat(
+						input_values, transform['concat_value'])
+				else:
+					row[transform['output_column_name']] = concat(
+						input_values)
+
+			elif transform['type'] == 'constant':
+				# try:
+				row[transform['output_column_name']] = constant(
+						transform['constant_value'])
 			else:
-				row[transform['output_column_name']] = concat(
-					input_values)
+				print(f"Transform of type: {transform['type']} not recognized.")
+		except Exception as e:
+			print(e)
+			good = False
 
-		elif transform['type'] == 'constant':
-			# try:
-			row[transform['output_column_name']] = constant(
-					transform['constant_value'])
-		else:
-			print(f"Transform of type: {transform['type']} not recognized.")
-
-	return row
+	return good, row
